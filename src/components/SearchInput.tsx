@@ -16,7 +16,7 @@ const SearchInput: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center border-2 bg-white border-[var(--color-primary)] w-auto lg:w-96 overflow-hidden">
+    <div className="flex items-center border-2 bg-white border-[var(--color-primary)] w-auto  lg:w-96 overflow-hidden">
       <input
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}

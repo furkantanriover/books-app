@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from "react";
-import Carousel from "components/Carousel/index";
-import useFetchBooks from "hooks/useFetchBooks";
-import { FC } from "react";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 import book_1 from "assets/images/book-1.png";
 import book_2 from "assets/images/book-2.png";
 import discount_1 from "assets/images/discount-1.png";
 import discount_2 from "assets/images/discount-2.png";
 import discount_3 from "assets/images/discount-3.png";
+import Carousel from "components/Carousel/index";
+import useFetchBooks from "hooks/useFetchBooks";
+import { FC, useCallback, useEffect, useState } from "react";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { useBasketStore } from "store/basket-store";
 import { useSearchStore } from "store/search-store";
 
-const TOTAL_PAGES = 5; // Assuming you know the total number of pages
+const TOTAL_PAGES = 5;
 
 export const Home: FC = () => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState<number>(0);
   const searchQuery = useSearchStore((state) => state.searchQuery);
-  console.log("searchQuery", searchQuery);
+  const addItem = useBasketStore((state) => state.addItem);
+  const incrementQuantity = useBasketStore((state) => state.incrementQuantity);
+  const decrementQuantity = useBasketStore((state) => state.decrementQuantity);
+  const basketItems = useBasketStore((state) => state.items);
+
   const {
     data: books,
     error,
     isLoading,
     isFetching,
-    refetch,
   } = useFetchBooks(searchQuery, page * 10);
 
   useEffect(() => {
-    window.scrollTo(0, 500);
+    window.scrollTo(0, 0);
   }, [page]);
 
   const carouselData = [
@@ -38,17 +41,43 @@ export const Home: FC = () => {
     { id: "5", smallThumbnail: discount_3 },
   ];
 
-  const handlePreviousPage = () => {
+  const handlePreviousPage = useCallback(() => {
     setPage((prev) => Math.max(prev - 1, 0));
-  };
+  }, []);
 
-  const handleNextPage = () => {
+  const handleNextPage = useCallback(() => {
     setPage((prev) => Math.min(prev + 1, TOTAL_PAGES - 1));
-  };
+  }, []);
 
-  const handlePageClick = (pageNumber: number) => {
+  const handlePageClick = useCallback((pageNumber: number) => {
     setPage(pageNumber);
-  };
+  }, []);
+
+  const handleAddToBasket = useCallback(
+    (book: any) => {
+      const item = basketItems.find((item) => item.id === book.id);
+      if (item) {
+        incrementQuantity(book.id);
+      } else {
+        addItem({
+          id: book.id,
+          title: book.title,
+          authors: book.authors || [],
+          smallThumbnail: book.smallThumbnail,
+          price: book.saleInfo.listPrice?.amount || 0,
+        });
+      }
+    },
+    [addItem, incrementQuantity, basketItems]
+  );
+
+  const getQuantity = useCallback(
+    (bookId: string) => {
+      const item = basketItems.find((item) => item.id === bookId);
+      return item ? item.quantity : 0;
+    },
+    [basketItems]
+  );
 
   if (error) return <div>Error fetching books: {error.message}</div>;
 
@@ -88,6 +117,21 @@ export const Home: FC = () => {
                       {book.authors.join(", ")}
                     </p>
                   )}
+                </div>
+                <div className="flex items-center mt-2">
+                  <button
+                    onClick={() => decrementQuantity(book.id)}
+                    className="px-2 py-1 bg-[var(--color-primary)] text-white rounded"
+                  >
+                    -
+                  </button>
+                  <span className="mx-2">{getQuantity(book.id)}</span>
+                  <button
+                    onClick={() => handleAddToBasket(book)}
+                    className="px-2 py-1 bg-[var(--color-primary)] text-white rounded"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             ))}

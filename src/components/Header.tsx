@@ -1,7 +1,7 @@
 import logo from "assets/images/logo.png";
 import { motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
-import { FiMenu, FiMoon, FiSun, FiX } from "react-icons/fi";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FiMenu, FiMoon, FiSun, FiX, FiShoppingCart } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useSettingsStore } from "store/settings-store";
 import SearchInput from "./SearchInput";
@@ -9,18 +9,18 @@ import SearchInput from "./SearchInput";
 const Header: React.FC = () => {
   const isDarkMode = useSettingsStore((state) => state.isDarkMode);
   const toggleDarkMode = useSettingsStore((state) => state.toggleDarkMode);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const handleMenuToggle = () => {
+  const handleMenuToggle = useCallback(() => {
     setIsMenuOpen(!isMenuOpen);
-  };
+  }, [isMenuOpen]);
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setIsMenuOpen(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -32,26 +32,38 @@ const Header: React.FC = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, handleClickOutside]);
 
   return (
     <nav className="bg-[var(--color-secondary)] text-white p-4 fixed w-full top-0 z-50 shadow-md transition duration-300">
       <div className="container mx-auto flex justify-between items-center">
         {/* Web view */}
-        <div className="hidden lg:flex">
-          <img src={logo} width={80} height={80} alt="logo" />
+        <div className="mr-2 lg:mr-0">
+          <Link to="/">
+            <img src={logo} width={80} height={80} alt="logo" />
+          </Link>
         </div>
 
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex">
           <SearchInput />
         </div>
-        <motion.button
-          whileHover={{ rotate: 360 }}
-          onClick={toggleDarkMode}
-          className="focus:outline-none p-2 rounded-full text-[var(--color-accent)] hidden lg:block transition duration-300"
-        >
-          {isDarkMode ? <FiSun size={24} /> : <FiMoon size={24} />}
-        </motion.button>
+        <div className="flex items-center space-x-4">
+          <motion.button
+            whileHover={{ rotate: 360 }}
+            onClick={toggleDarkMode}
+            className="focus:outline-none p-2 rounded-full text-[var(--color-accent)] hidden lg:block transition duration-300"
+          >
+            {isDarkMode ? <FiSun size={24} /> : <FiMoon size={24} />}
+          </motion.button>
+          <Link to="/cart">
+            <motion.div whileHover={{ scale: 1.2 }} className="hidden lg:block">
+              <FiShoppingCart
+                size={24}
+                className="text-[var(--color-accent)]"
+              />
+            </motion.div>
+          </Link>
+        </div>
         {/* Mobile view */}
         <div className="flex lg:hidden items-center w-full justify-between">
           <SearchInput />
@@ -94,14 +106,18 @@ const Header: React.FC = () => {
             ))}
           </ul>
           <div className="border-t border-[var(--color-accent)] my-4"></div>
-          <div className="flex justify-center">
-            <motion.button
-              whileHover={{ rotate: 360 }}
-              onClick={toggleDarkMode}
-              className="focus:outline-none p-2 rounded-full text-[var(--color-accent)] transition duration-300"
-            >
+          <div className="flex justify-center space-x-4">
+            <motion.div whileHover={{ scale: 1.2 }}>
               {isDarkMode ? <FiSun size={24} /> : <FiMoon size={24} />}
-            </motion.button>
+            </motion.div>
+            <Link to="/cart">
+              <motion.div whileHover={{ scale: 1.2 }}>
+                <FiShoppingCart
+                  size={24}
+                  className="text-[var(--color-accent)]"
+                />
+              </motion.div>
+            </Link>
           </div>
         </div>
       </motion.div>
