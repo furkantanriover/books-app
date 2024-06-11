@@ -1,14 +1,28 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import Header from "./components/Header";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppRouter from "./router";
+import { useSettingsStore } from "./store/settings-store";
+
+const queryClient = new QueryClient();
 
 const App: React.FC = () => {
+  const isDarkMode = useSettingsStore((state) => state.isDarkMode);
+
   return (
-    <Router>
-      <Header />
-      <AppRouter />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <div
+        className={isDarkMode ? "dark" : ""}
+        style={{
+          backgroundColor: `var(--color-background)`,
+          color: `var(--color-text)`,
+        }}
+      >
+        <Router>
+          <AppRouter />
+        </Router>
+      </div>
+    </QueryClientProvider>
   );
 };
 
