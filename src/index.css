@@ -1,13 +1,21 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light mode için özel stiller */
+:root {
+  --color-primary: theme("colors.primary");
+  --color-secondary: theme("colors.secondary");
+  --color-accent: theme("colors.accent");
+  --color-background: theme("colors.background");
+  --color-text: theme("colors.text");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Dark mode için özel stiller */
+.dark {
+  --color-primary: theme("colors.primary-dark");
+  --color-secondary: theme("colors.secondary-dark");
+  --color-accent: theme("colors.accent-dark");
+  --color-background: theme("colors.background-dark");
+  --color-text: theme("colors.text-dark");
 }
