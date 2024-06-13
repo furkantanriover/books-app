@@ -26,12 +26,12 @@ export const Cart: FC = () => {
   }
 
   return (
-    <div className="continer mx-auto p-4">
-      <h1 className="text-2xl font-semibold mb-4">Sepet</h1>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-semibold mb-4">{t("cart.title")}</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2">
           {/* Products List */}
-          <div className="grid grid-cols-1 gap-4  overflow-auto  pr-4">
+          <div className="grid grid-cols-1 gap-4 overflow-auto pr-4">
             {basketItems.map((item) => (
               <div
                 key={item.id}
@@ -47,7 +47,9 @@ export const Cart: FC = () => {
                     {item.title}
                   </h2>
                   <p className="text-gray-600">{item.authors.join(", ")}</p>
-                  <p className="text-gray-800">Fiyat: ${item.price}</p>
+                  <p className="text-gray-800">
+                    {t("cart.price")}: ${item.price}
+                  </p>
                   <div className="flex items-center mt-2">
                     <button
                       onClick={() => decrementQuantity(item.id)}
@@ -66,7 +68,7 @@ export const Cart: FC = () => {
                       onClick={() => removeItem(item.id)}
                       className="ml-4 px-2 py-1 bg-gray-300 text-gray-900 rounded-lg hover:bg-gray-400 transition"
                     >
-                      Kaldır
+                      {t("cart.remove")}
                     </button>
                   </div>
                 </div>
@@ -77,22 +79,24 @@ export const Cart: FC = () => {
 
         <div className="lg:col-span-1 bg-white p-4 h-[220px] mr-4 rounded-lg shadow-md flex flex-col justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Toplam</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              {t("cart.title")}
+            </h2>
             <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-700">Toplam Ürün Sayısı:</span>
+              <span className="text-gray-700">{t("cart.totalItems")}:</span>
               <span className="text-gray-900 font-semibold">
                 {basketItems.length}
               </span>
             </div>
             <div className="flex justify-between items-center mb-4">
-              <span className="text-gray-700">Toplam Tutar:</span>
+              <span className="text-gray-700">{t("cart.totalAmount")}:</span>
               <span className="text-gray-900 font-semibold">
                 ${getTotalPrice}
               </span>
             </div>
           </div>
           <button className="w-full py-2 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-accent)] transition mt-4">
-            Ödeme Yap
+            {t("cart.checkout")}
           </button>
         </div>
       </div>

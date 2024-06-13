@@ -7,8 +7,10 @@ import { useBasketStore } from "store/basket-store";
 import { useSettingsStore } from "store/settings-store";
 import LanguageSwitcher from "./LanguageSwitcher";
 import SearchInput from "./SearchInput";
+import { useTranslation } from "react-i18next";
 
 const Header: React.FC = () => {
+  const { t } = useTranslation();
   const isDarkMode = useSettingsStore((state) => state.isDarkMode);
   const toggleDarkMode = useSettingsStore((state) => state.toggleDarkMode);
   const basketItems = useBasketStore((state) => state.items);
@@ -89,7 +91,7 @@ const Header: React.FC = () => {
           {location.pathname !== "/cart" && <SearchInput />}
           <button
             onClick={handleMenuToggle}
-            className="focus:outline-none p-2 rounded-full text-[var(--color-accent)] transition duration-300"
+            className="focus:outline-none p-2 rounded-full text-[var(--color-accent)] transition duration-300 ml-auto"
           >
             {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
           </button>
@@ -131,39 +133,52 @@ const Header: React.FC = () => {
         } md:hidden`}
       >
         <div className="flex flex-col h-full">
-          <ul className="flex flex-col">
-            {["Home", "Cart"].map((tab, index) => (
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center space-x-4">
+              <motion.button
+                whileHover={{ scale: 1.2 }}
+                onClick={toggleDarkMode}
+                className="focus:outline-none p-2 rounded-full text-[var(--color-accent)]"
+              >
+                {isDarkMode ? <FiSun size={24} /> : <FiMoon size={24} />}
+              </motion.button>
+              <LanguageSwitcher />
+            </div>
+            <button
+              onClick={handleMenuToggle}
+              className="focus:outline-none p-2 rounded-full text-[var(--color-accent)]"
+            >
+              <FiX size={24} />
+            </button>
+          </div>
+          <ul className="flex flex-col space-y-4">
+            {["home"].map((tab, index) => (
               <li key={index} className="relative group">
                 <div className="w-full h-full dark:text-secondary text-secondary-dark">
                   <Link
-                    to={
-                      tab === "Home"
-                        ? "/"
-                        : `/${tab.toLowerCase().replace(" ", "-")}`
-                    }
-                    className="block w-full h-full transition duration-300 p-3 group-hover:bg-[var(--color-accent)]"
+                    to={`/${tab.toLowerCase()}`}
+                    className="block w-full h-full transition duration-300 p-3 group-hover:bg-[var(--color-accent)] rounded-lg"
                     onClick={handleMenuToggle}
                   >
-                    {tab}
-                    {tab === "Cart" && getTotalItemCount() > 0 && (
-                      <span className="absolute top-3 right-3 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                        {getTotalItemCount()}
-                      </span>
-                    )}
+                    {t(`menu.${tab}`)}
                   </Link>
                 </div>
               </li>
             ))}
           </ul>
-          <div className="border-t border-[var(--color-accent)] my-4"></div>
-          <div className="flex justify-center mb-10">
-            <motion.div
-              className="text-[var(--color-accent)]"
-              onClick={toggleDarkMode}
-              whileHover={{ scale: 1.2 }}
+          <div className="mt-auto flex justify-center">
+            <Link
+              to="/cart"
+              className="relative text-center w-full py-2 bg-[var(--color-primary)] text-white rounded-lg"
+              onClick={handleMenuToggle}
             >
-              {isDarkMode ? <FiSun size={24} /> : <FiMoon size={24} />}
-            </motion.div>
+              <FiShoppingCart size={24} className="inline-block mr-2" />
+              {getTotalItemCount() > 0 && (
+                <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full ml-2">
+                  {getTotalItemCount()}
+                </span>
+              )}
+            </Link>
           </div>
         </div>
       </motion.div>

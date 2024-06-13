@@ -8,7 +8,13 @@
     "search-result-for": "Search Results"
   },
   "cart": {
-    "empty-cart": "Your cart is empty."
+    "empty-cart": "Your cart is empty.",
+    "title": "Cart",
+    "totalItems": "Total Items",
+    "totalAmount": "Total Amount",
+    "remove": "Remove",
+    "checkout": "Checkout",
+    "price": "Price"
   },
   "add-to-basket": "Add to Basket",
   "price": "Price",
@@ -20,5 +26,8 @@
   },
   "error": {
     "fetchingBooks": "Error fetching books"
+  },
+  "menu": {
+    "home": "Home"
   }
 }

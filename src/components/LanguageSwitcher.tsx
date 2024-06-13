@@ -21,7 +21,7 @@ const LanguageSwitcher: React.FC = () => {
         <img
           src={language === "tr" ? trFlag : enFlag}
           alt={language === "tr" ? "Türkçe" : "English"}
-          className="w-8 h-8 object-cover rounded-full "
+          className="w-6 h-6 object-cover rounded-full "
         />
       </button>
     </motion.div>

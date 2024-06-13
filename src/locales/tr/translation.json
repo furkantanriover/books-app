@@ -4,21 +4,30 @@
     "featuredBooks": "Öne Çıkan Kitaplar"
   },
   "search": {
-    "search-book": "kitap başlığı ara...",
+    "search-book": "Kitap başlığını ara...",
     "search-result-for": "Arama Sonuçları"
   },
   "cart": {
-    "empty-cart": "Sepetiniz boş."
+    "empty-cart": "Sepetiniz boş.",
+    "title": "Sepet",
+    "totalItems": "Toplam Ürün Sayısı",
+    "totalAmount": "Toplam Tutar",
+    "remove": "Kaldır",
+    "checkout": "Ödeme Yap",
+    "price": "Fiyat"
   },
   "add-to-basket": "Sepete Ekle",
   "price": "Fiyat",
   "toast": {
-    "quantityIncreased": "{{title}} miktarı arttı!",
+    "quantityIncreased": "{{title}} miktarı artırıldı!",
     "addedToBasket": "{{title}} sepete eklendi!",
-    "quantityDecreased": "{{title}} miktarı azaldı!",
+    "quantityDecreased": "{{title}} miktarı azaltıldı!",
     "removedFromBasket": "{{title}} sepetten çıkarıldı!"
   },
   "error": {
-    "fetchingBooks": "Kitaplar alınırken hata oluştu"
+    "fetchingBooks": "Kitapları getirirken hata oluştu"
+  },
+  "menu": {
+    "home": "Anasayfa"
   }
 }
