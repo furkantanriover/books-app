@@ -10,5 +10,14 @@
     "empty-cart": "Your cart is empty."
   },
   "add-to-basket": "Add to Basket",
-  "price": "Price"
+  "price": "Price",
+  "toast": {
+    "quantityIncreased": "{{title}} quantity increased!",
+    "addedToBasket": "{{title}} added to basket!",
+    "quantityDecreased": "{{title}} quantity decreased!",
+    "removedFromBasket": "{{title}} removed from basket!"
+  },
+  "error": {
+    "fetchingBooks": "Error fetching books"
+  }
 }
