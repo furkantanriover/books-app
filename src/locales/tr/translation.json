@@ -1,10 +1,11 @@
 {
   "home": {
-    "featured-advantages": "Öne Çıkan Avantajlar",
-    "featured-books": "Öne Çıkan Kitaplar"
+    "featuredAdvantages": "Öne Çıkan Avantajlar",
+    "featuredBooks": "Öne Çıkan Kitaplar"
   },
   "search": {
-    "search-book": "kitap başlığı ara..."
+    "search-book": "kitap başlığı ara...",
+    "search-result-for": "Arama Sonuçları"
   },
   "cart": {
     "empty-cart": "Sepetiniz boş."

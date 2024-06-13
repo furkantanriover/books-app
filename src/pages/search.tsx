@@ -1,5 +1,6 @@
 import useFetchBooks from "hooks/useFetchBooks";
 import { FC, useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -9,6 +10,7 @@ import { useBasketStore } from "store/basket-store";
 const TOTAL_PAGES = 5;
 
 export const Search: FC = () => {
+  const { t } = useTranslation();
   const [page, setPage] = useState<number>(0);
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
@@ -71,6 +73,10 @@ export const Search: FC = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-semibold mb-4">
+        {t("search.search-result-for")}:{" "}
+        <span className="font-bold">{searchQuery}</span>
+      </h2>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-5 mt-36">
         {isLoading || isFetching
           ? Array.from({ length: 10 }).map((_, index) => (

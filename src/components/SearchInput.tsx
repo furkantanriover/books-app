@@ -30,7 +30,8 @@ const SearchInput: React.FC = () => {
       />
       <button
         onClick={triggerSearch}
-        className="flex items-center justify-center px-4 py-2 bg-[var(--color-primary)] text-white"
+        disabled={!searchQuery}
+        className="flex disabled:opacity-50 items-center justify-center px-4 py-2 bg-[var(--color-primary)] text-white"
       >
         <FiSearch size={24} />
       </button>
