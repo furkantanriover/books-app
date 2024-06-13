@@ -1,0 +1,14 @@
+{
+  "home": {
+    "featured-advantages": "Featured Advantages",
+    "featured-books": "Featured Books"
+  },
+  "search": {
+    "search-book": "search book title..."
+  },
+  "cart": {
+    "empty-cart": "Your cart is empty."
+  },
+  "add-to-basket": "Add to Basket",
+  "price": "Price"
+}

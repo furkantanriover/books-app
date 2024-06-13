@@ -1,0 +1,14 @@
+{
+  "home": {
+    "featured-advantages": "Öne Çıkan Avantajlar",
+    "featured-books": "Öne Çıkan Kitaplar"
+  },
+  "search": {
+    "search-book": "kitap adı arayınız..."
+  },
+  "cart": {
+    "empty-cart": "Sepetinizde ürün bulunmamaktadır."
+  },
+  "add-to-basket": "Sepete Ekle",
+  "price": "Fiyat"
+}
