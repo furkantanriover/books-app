@@ -1,17 +1,17 @@
 const lightColors = {
-  primary: "#FF8000", // Turuncu (Primary)
-  secondary: "#0080FF", // Mavi (Secondary)
-  accent: "#FFCC99", // Açık turuncu (Accent)
-  background: "#FFFFFF", // Beyaz (Light Mode Background)
-  text: "#000000", // Siyah (Light Mode Text)
+  primary: "#6200EE",
+  secondary: "#F5F5F5",
+  accent: "#BB86FC",
+  background: "#FFFFFF",
+  text: "#000000",
 };
 
 const darkColors = {
-  primary: "#6200EE", // Mor (Primary)
-  secondary: "#282A2C", // Açık gri (Secondary)
-  accent: "#BB86FC", // Açık mor (Accent)
-  background: "#1F1F1F", // Gri (Dark Mode Background)
-  text: "#FFFFFF", // Beyaz (Dark Mode Text)
+  primary: "#0B56EC",
+  secondary: "#282A2C",
+  accent: "#5e98ea",
+  background: "#1F1F1F",
+  text: "#FFFFFF",
 };
 
 export { lightColors, darkColors };

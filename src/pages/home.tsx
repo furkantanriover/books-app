@@ -1,7 +1,4 @@
-import book_1 from "assets/images/book-1.png";
-import book_2 from "assets/images/book-2.png";
 import discount_1 from "assets/images/discount-1.png";
-import discount_2 from "assets/images/discount-2.png";
 import discount_3 from "assets/images/discount-3.png";
 import Carousel from "components/Carousel/index";
 import useFetchBooks from "hooks/useFetchBooks";
@@ -11,16 +8,22 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useBasketStore } from "store/basket-store";
 import { useSearchStore } from "store/search-store";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const TOTAL_PAGES = 5;
 
 export const Home: FC = () => {
   const [page, setPage] = useState<number>(0);
+  const { t } = useTranslation();
   const searchQuery = useSearchStore((state) => state.searchQuery);
   const addItem = useBasketStore((state) => state.addItem);
   const incrementQuantity = useBasketStore((state) => state.incrementQuantity);
   const decrementQuantity = useBasketStore((state) => state.decrementQuantity);
+  const removeItem = useBasketStore((state) => state.removeItem);
   const basketItems = useBasketStore((state) => state.items);
+  const navigate = useNavigate();
 
   const {
     data: books,
@@ -34,11 +37,11 @@ export const Home: FC = () => {
   }, [page]);
 
   const carouselData = [
-    { id: "1", smallThumbnail: book_1 },
-    { id: "2", smallThumbnail: book_2 },
+    { id: "1", smallThumbnail: discount_1 },
+    { id: "2", smallThumbnail: discount_3 },
     { id: "3", smallThumbnail: discount_1 },
-    { id: "4", smallThumbnail: discount_2 },
-    { id: "5", smallThumbnail: discount_3 },
+    { id: "4", smallThumbnail: discount_3 },
+    { id: "5", smallThumbnail: discount_1 },
   ];
 
   const handlePreviousPage = useCallback(() => {
@@ -58,6 +61,7 @@ export const Home: FC = () => {
       const item = basketItems.find((item) => item.id === book.id);
       if (item) {
         incrementQuantity(book.id);
+        toast.info(t("toast.quantityIncreased", { title: book.title }));
       } else {
         addItem({
           id: book.id,
@@ -66,9 +70,24 @@ export const Home: FC = () => {
           smallThumbnail: book.smallThumbnail,
           price: book.saleInfo.listPrice?.amount || 0,
         });
+        toast.success(t("toast.addedToBasket", { title: book.title }));
       }
     },
-    [addItem, incrementQuantity, basketItems]
+    [addItem, incrementQuantity, basketItems, t]
+  );
+
+  const handleRemoveFromBasket = useCallback(
+    (book: any) => {
+      const item = basketItems.find((item) => item.id === book.id);
+      if (item && item.quantity > 1) {
+        decrementQuantity(book.id);
+        toast.info(t("toast.quantityDecreased", { title: book.title }));
+      } else {
+        removeItem(book.id);
+        toast.error(t("toast.removedFromBasket", { title: book.title }));
+      }
+    },
+    [decrementQuantity, removeItem, basketItems, t]
   );
 
   const getQuantity = useCallback(
@@ -79,62 +98,91 @@ export const Home: FC = () => {
     [basketItems]
   );
 
-  if (error) return <div>Error fetching books: {error.message}</div>;
+  const handleBookClick = (slug: string) => {
+    navigate(`/book/${slug}`);
+  };
+
+  if (error)
+    return (
+      <div>
+        {t("error.fetchingBooks")}: {error.message}
+      </div>
+    );
 
   return (
     <div>
+      <h1 className="text-[28px] lg:mt-8 sm:mt-0 font-bold">
+        {t("home.featuredAdvantages")}
+      </h1>
       <Carousel data={carouselData} />
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-5 mt-36">
-        {isLoading || isFetching
-          ? Array.from({ length: 10 }).map((_, index) => (
-              <div
-                key={index}
-                className="flex flex-col h-76 items-center justify-between mb-4"
-              >
-                <Skeleton width={240} height={240} />
-                <div className="mt-2">
-                  <Skeleton width={180} height={20} />
-                  <Skeleton width={120} height={15} />
+      <div className="flex flex-col mt-28 ">
+        <h1 className="text-[28px] font-bold mb-8">
+          {t("home.featuredBooks")}
+        </h1>
+
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 ">
+          {isLoading || isFetching
+            ? Array.from({ length: 10 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col h-76 items-center justify-between mb-4"
+                >
+                  <Skeleton width={240} height={240} />
+                  <div className="mt-2">
+                    <Skeleton width={180} height={20} />
+                    <Skeleton width={120} height={15} />
+                  </div>
                 </div>
-              </div>
-            ))
-          : books?.map((book: any) => (
-              <div
-                key={book.id}
-                className="flex flex-col h-76 items-center justify-between mb-4"
-              >
-                <img
-                  src={book.smallThumbnail}
-                  alt={book.title}
-                  className="w-60 h-60 object-fill"
-                />
-                <div>
-                  <h2 className="mt-2 text-center">
-                    {book.title.trim().substring(0, 30) + "..."}
-                  </h2>
-                  {book.authors && (
-                    <p className="text-sm text-gray-600 text-center">
-                      {book.authors.join(", ")}
-                    </p>
-                  )}
+              ))
+            : books?.map((book: any) => (
+                <div
+                  key={book.id}
+                  className="flex flex-col h-76 items-center justify-between mb-4"
+                >
+                  <img
+                    src={book.smallThumbnail}
+                    alt={book.title}
+                    className="w-60 h-60 object-fill cursor-pointer"
+                    onClick={() => handleBookClick(book.id)}
+                  />
+                  <div>
+                    <h2
+                      className="mt-2 text-center cursor-pointer"
+                      onClick={() => handleBookClick(book.id)}
+                    >
+                      {book.title.trim().substring(0, 30) + "..."}
+                    </h2>
+                    {book.authors && (
+                      <p className="text-sm text-gray-600 text-center">
+                        {book.authors.join(", ")}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex items-center mt-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveFromBasket(book);
+                      }}
+                      className="px-2 py-1 bg-[var(--color-primary)] text-white rounded"
+                      disabled={getQuantity(book.id) === 0}
+                    >
+                      -
+                    </button>
+                    <span className="mx-2">{getQuantity(book.id)}</span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToBasket(book);
+                      }}
+                      className="px-2 py-1 bg-[var(--color-primary)] text-white rounded"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center mt-2">
-                  <button
-                    onClick={() => decrementQuantity(book.id)}
-                    className="px-2 py-1 bg-[var(--color-primary)] text-white rounded"
-                  >
-                    -
-                  </button>
-                  <span className="mx-2">{getQuantity(book.id)}</span>
-                  <button
-                    onClick={() => handleAddToBasket(book)}
-                    className="px-2 py-1 bg-[var(--color-primary)] text-white rounded"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+        </div>
       </div>
       <div className="flex justify-center items-center mt-12 pb-12">
         <button

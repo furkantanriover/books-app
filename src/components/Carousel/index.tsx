@@ -41,7 +41,7 @@ const Carousel: React.FC<CarouselProps> = ({ data }) => {
               <img
                 src={data.smallThumbnail}
                 alt={data.title}
-                className="swiper-slide-img"
+                className="swiper-slide-img object-cover"
               />
               {data.title && <h2 className="mt-4 text-lg">{data.title}</h2>}
             </div>

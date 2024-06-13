@@ -1,5 +1,5 @@
 import BaseLayout from "layouts/BaseLayout";
-import { BookDetail, Cart, Home } from "pages";
+import { BookDetail, Cart, Home, Search } from "pages";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -9,7 +9,8 @@ const AppRouter: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/book-detail" element={<BookDetail />} />
+        <Route path="/book/:slug" element={<BookDetail />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </BaseLayout>
   );

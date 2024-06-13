@@ -26,3 +26,13 @@ export const searchBooks = async (query: string, startIndex: number) => {
     throw error;
   }
 };
+
+export const fetchBookById = async (id: string | undefined) => {
+  try {
+    const response = await axiosInstance.get(`/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching book by id:", error);
+    throw error;
+  }
+};
