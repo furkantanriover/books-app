@@ -22,7 +22,7 @@ const App: React.FC = () => {
         <Router>
           <AppRouter />
         </Router>
-        <ToastContainer />
+        <ToastContainer autoClose={1000} />
       </div>
     </QueryClientProvider>
   );

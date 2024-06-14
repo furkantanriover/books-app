@@ -156,7 +156,7 @@ const Header: React.FC = () => {
               <li key={index} className="relative group">
                 <div className="w-full h-full dark:text-secondary text-secondary-dark">
                   <Link
-                    to={`/${tab.toLowerCase()}`}
+                    to={tab === "home" ? "/" : `/${tab.toLowerCase()}`}
                     className="block w-full h-full transition duration-300 p-3 group-hover:bg-[var(--color-accent)] rounded-lg"
                     onClick={handleMenuToggle}
                   >
