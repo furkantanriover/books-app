@@ -11,6 +11,7 @@ import { useSearchStore } from "store/search-store";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const TOTAL_PAGES = 5;
 
@@ -135,21 +136,19 @@ export const Home: FC = () => {
                 </div>
               ))
             : books?.map((book: any) => (
-                <div
+                <motion.div
                   key={book.id}
-                  className="flex flex-col h-76 items-center justify-between mb-4"
+                  className="flex flex-col h-96 items-center justify-between mb-4 p-4 bg-[var(--color-secondary)] rounded-lg shadow-md cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => handleBookClick(book.id)}
                 >
                   <img
                     src={book.smallThumbnail}
                     alt={book.title}
-                    className="w-60 h-60 object-fill cursor-pointer"
-                    onClick={() => handleBookClick(book.id)}
+                    className="w-60 h-60 object-cover rounded-md"
                   />
                   <div>
-                    <h2
-                      className="mt-2 text-center cursor-pointer"
-                      onClick={() => handleBookClick(book.id)}
-                    >
+                    <h2 className="mt-2 text-center">
                       {book.title.trim().substring(0, 30) + "..."}
                     </h2>
                     {book.authors && (
@@ -180,7 +179,7 @@ export const Home: FC = () => {
                       +
                     </button>
                   </div>
-                </div>
+                </motion.div>
               ))}
         </div>
       </div>

@@ -6,6 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useSearchParams, Link } from "react-router-dom";
 import { useBasketStore } from "store/basket-store";
+import { motion } from "framer-motion";
 
 const TOTAL_PAGES = 5;
 
@@ -77,7 +78,7 @@ export const Search: FC = () => {
         {t("search.search-result-for")}:{" "}
         <span className="font-bold">{searchQuery}</span>
       </h2>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-5 mt-36">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mt-12">
         {isLoading || isFetching
           ? Array.from({ length: 10 }).map((_, index) => (
               <div
@@ -92,15 +93,16 @@ export const Search: FC = () => {
               </div>
             ))
           : books?.map((book: any) => (
-              <div
+              <motion.div
                 key={book.id}
-                className="flex flex-col h-76 items-center justify-between mb-4"
+                className="flex flex-col h-76 items-center justify-between mb-4 p-4 bg-[var(--color-secondary)] rounded-lg shadow-md cursor-pointer"
+                whileHover={{ scale: 1.05 }}
               >
                 <Link to={`/book/${book.id}`}>
                   <img
                     src={book.smallThumbnail}
                     alt={book.title}
-                    className="w-60 h-60 object-fill"
+                    className="w-60 h-60 object-cover rounded-md"
                   />
                 </Link>
                 <div>
@@ -130,7 +132,7 @@ export const Search: FC = () => {
                     +
                   </button>
                 </div>
-              </div>
+              </motion.div>
             ))}
       </div>
       <div className="flex justify-center items-center mt-12 pb-12">
