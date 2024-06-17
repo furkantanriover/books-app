@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+# Books App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Books App, kullanıcıların Google Books API'ını kullanarak kitapları aramasına, kitap detaylarını görüntülemesine ve sepetlerine kitap eklemelerine olanak tanıyan bir web uygulamasıdır. Bu uygulama aynı zamanda çoklu dil desteği ve karanlık/aydınlık mod gibi özellikler de sunar.
 
-## Available Scripts
+## Proje Özellikleri
 
-In the project directory, you can run:
+- **Kitap Arama ve Listeleme**: Google Books API kullanılarak kitap arama ve listeleme.
+- **Kitap Detayları**: Kitapların detay sayfasını görüntüleme.
+- **Sepete Ekleme ve Yönetim**: Kitapları sepete ekleme, miktarını artırma/azaltma ve sepetten çıkarma.
+- **Ödeme Modalı**: Sepetteki kitaplar için ödeme yapma imkanı.
+- **Çoklu Dil Desteği**: Kullanıcı arayüzü için çoklu dil desteği (i18next kullanılarak).
+- **Karanlık/Aydınlık Mod**: Kullanıcı tercihlerine göre karanlık veya aydınlık moda geçiş.
+- **Yükleme Animasyonları**: Sayfalar ve bileşenler arasında yükleme animasyonları.
+- **Responsive Tasarım**: Mobil ve masaüstü cihazlar için optimize edilmiş kullanıcı arayüzü.
 
-### `npm start`
+## Kullanılan Teknolojiler
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **React**: Kullanıcı arayüzünü oluşturmak için.
+- **TypeScript**: Tip güvenliğini sağlamak için.
+- **React Router**: Sayfa yönlendirmeleri ve rota yönetimi için.
+- **Zustand**: Global state management için.
+- **TanStack Query (React Query)**: Veri getirme, önbellekleme ve güncelleme için.
+- **i18next**: Uluslararasılaştırma (i18n) için.
+- **Tailwind CSS**: Hızlı ve kolay stil verme için.
+- **Framer Motion**: Animasyonlar için.
+- **React Hook Form**: Form yönetimi için.
+- **Zod**: Form doğrulama için.
+- **React Toastify**: Kullanıcıya bilgi mesajları göstermek için.
+- **Axios**: HTTP istekleri yapmak için.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Kurulum ve Çalıştırma
 
-### `npm test`
+Projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları izleyin:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Gerekli Bağımlılıkların Yüklenmesi
 
-### `npm run build`
+Öncelikle gerekli bağımlılıkları yüklemek için aşağıdaki komutu çalıştırın:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Geliştirme Sunucusunu Başlatma
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Uygulamayı yerel ortamda çalıştırmak için:
 
-### `npm run eject`
+```bash
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Geliştirme Sunucusunu Başlatma
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Uygulamayı yerel ortamda çalıştırmak için:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+npm start
+```
+Bu komut, uygulamanın geliştirme sunucusunu başlatacak ve tarayıcınızda http://localhost:3000 adresinde açacaktır.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Üretim İçin Derleme
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Uygulamayı üretim için derlemek için:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run build
+```
+Bu komut, uygulamayı build klasörüne derler.
