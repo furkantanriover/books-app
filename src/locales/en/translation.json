@@ -10,6 +10,7 @@
   "cart": {
     "empty-cart": "Your cart is empty.",
     "title": "Cart",
+    "total": "Total",
     "totalItems": "Total Items",
     "totalAmount": "Total Amount",
     "remove": "Remove",

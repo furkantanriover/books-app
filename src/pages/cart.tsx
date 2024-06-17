@@ -1,7 +1,8 @@
-import { FC, useMemo } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useBasketStore } from "store/basket-store";
 import { BsBasket2Fill } from "react-icons/bs";
+import PaymentModal from "components/modals/PaymentModal";
 
 export const Cart: FC = () => {
   const { t } = useTranslation();
@@ -9,6 +10,7 @@ export const Cart: FC = () => {
   const incrementQuantity = useBasketStore((state) => state.incrementQuantity);
   const decrementQuantity = useBasketStore((state) => state.decrementQuantity);
   const removeItem = useBasketStore((state) => state.removeItem);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getTotalPrice = useMemo(() => {
     return basketItems
@@ -30,7 +32,6 @@ export const Cart: FC = () => {
       <h1 className="text-2xl font-semibold mb-4">{t("cart.title")}</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2">
-          {/* Products List */}
           <div className="grid grid-cols-1 gap-4 overflow-auto pr-4">
             {basketItems.map((item) => (
               <div
@@ -80,7 +81,7 @@ export const Cart: FC = () => {
         <div className="lg:col-span-1 bg-white p-4 h-[220px] mr-4 rounded-lg shadow-md flex flex-col justify-between">
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              {t("cart.title")}
+              {t("cart.total")}
             </h2>
             <div className="flex justify-between items-center mb-2">
               <span className="text-gray-700">{t("cart.totalItems")}:</span>
@@ -95,11 +96,18 @@ export const Cart: FC = () => {
               </span>
             </div>
           </div>
-          <button className="w-full py-2 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-accent)] transition mt-4">
+          <button
+            className="w-full py-2 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-accent)] transition mt-4"
+            onClick={() => setIsModalOpen(true)}
+          >
             {t("cart.checkout")}
           </button>
         </div>
       </div>
+      <PaymentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

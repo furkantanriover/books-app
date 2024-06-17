@@ -15,6 +15,7 @@ interface BasketState {
   removeItem: (id: string) => void;
   incrementQuantity: (id: string) => void;
   decrementQuantity: (id: string) => void;
+  clearBasket: () => void;
 }
 
 export const useBasketStore = create<BasketState>((set) => ({
@@ -49,4 +50,8 @@ export const useBasketStore = create<BasketState>((set) => ({
         )
         .filter((item) => item.quantity > 0),
     })),
+  clearBasket: () =>
+    set({
+      items: [],
+    }),
 }));

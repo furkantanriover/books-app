@@ -10,6 +10,7 @@
   "cart": {
     "empty-cart": "Sepetiniz boş.",
     "title": "Sepet",
+    "total": "Toplam",
     "totalItems": "Toplam Ürün Sayısı",
     "totalAmount": "Toplam Tutar",
     "remove": "Kaldır",

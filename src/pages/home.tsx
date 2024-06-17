@@ -138,7 +138,7 @@ export const Home: FC = () => {
             : books?.map((book: any) => (
                 <motion.div
                   key={book.id}
-                  className="flex flex-col h-96 items-center justify-between mb-4 p-4 bg-[var(--color-secondary)] rounded-lg shadow-md cursor-pointer"
+                  className="flex flex-col h-96 max-w-80 items-center justify-between mb-4 p-4 bg-[var(--color-secondary)] rounded-lg shadow-md cursor-pointer"
                   whileHover={{ scale: 1.05 }}
                   onClick={() => handleBookClick(book.id)}
                 >
@@ -153,7 +153,8 @@ export const Home: FC = () => {
                     </h2>
                     {book.authors && (
                       <p className="text-sm text-gray-600 text-center">
-                        {book.authors.join(", ")}
+                        {book.authors.join(", ").trim().substring(0, 60) +
+                          "..."}
                       </p>
                     )}
                   </div>
