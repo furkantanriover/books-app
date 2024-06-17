@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import MaskedInput from "react-text-mask";
 import { useBasketStore } from "store/basket-store";
 import { z } from "zod";
-
+import { useTranslation } from "react-i18next";
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -49,8 +49,10 @@ type PaymentFormData = z.infer<typeof paymentSchema>;
 
 const PaymentModal: FC<PaymentModalProps> = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(1);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const clearBasket = useBasketStore((state) => state.clearBasket);
+
   const {
     handleSubmit,
     control,
@@ -68,7 +70,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ isOpen, onClose }) => {
       } else {
         console.log(data);
         onClose();
-        clearBasket(); // Sepeti temizle
+        clearBasket();
         navigate("/success");
       }
     },
@@ -117,22 +119,24 @@ const PaymentModal: FC<PaymentModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+    <div className="fixed inset-0 bg-[var(--color-secondary)] bg-opacity-50 flex justify-center items-center p-4">
       <div
         ref={modalRef}
-        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg"
+        className="bg-[var(--color-secondary)] p-8 rounded-lg shadow-2xl w-full max-w-lg"
       >
         <div className="flex flex-col items-center mb-4">
           <div
             className={`flex items-center mb-4 ${
-              step === 1 ? "text-blue-500" : "text-gray-500"
+              step === 1 ? "text-[var(--color-primary)]" : "text-gray-500"
             }`}
             style={{ cursor: step === 2 ? "pointer" : "default" }}
             onClick={() => setStep(1)}
           >
             <div
               className={`h-8 w-8 rounded-full flex items-center justify-center border ${
-                step === 1 ? "bg-blue-500 text-white" : "border-gray-500"
+                step === 1
+                  ? "bg-[var(--color-primary)] text-white"
+                  : "border-gray-500"
               }`}
             >
               1
@@ -141,19 +145,21 @@ const PaymentModal: FC<PaymentModalProps> = ({ isOpen, onClose }) => {
           </div>
           <div
             className={`flex-grow border-l-4 h-16 ${
-              step === 2 ? "border-blue-500" : "border-gray-500"
+              step === 2 ? "border-[var(--color-primary)]" : "border-gray-500"
             }`}
           ></div>
           <div
             className={`flex items-center mt-4 ${
-              step === 2 ? "text-blue-500" : "text-gray-500"
+              step === 2 ? "text-[var(--color-primary)]" : "text-gray-500"
             }`}
             style={{ cursor: "pointer" }}
             onClick={() => setStep(2)}
           >
             <div
               className={`h-8 w-8 rounded-full flex items-center justify-center border ${
-                step === 2 ? "bg-blue-500 text-white" : "border-gray-500"
+                step === 2
+                  ? "bg-[var(--color-primary)] text-white"
+                  : "border-gray-500"
               }`}
             >
               2
@@ -165,7 +171,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ isOpen, onClose }) => {
           {step === 1 && (
             <>
               <div className="mb-4">
-                <label className="block mb-2">Ad</label>
+                <label className="block mb-2">{t("name")}</label>
                 <Controller
                   name="firstName"
                   control={control}
@@ -221,7 +227,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ isOpen, onClose }) => {
               </div>
               <button
                 type="button"
-                className={`w-full mt-4 bg-blue-500 text-white py-2 rounded-lg ${
+                className={`w-full mt-4 bg-[var(--color-primary)] text-white py-2 rounded-lg ${
                   isDisabled ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 onClick={handleSubmit(onSubmit)}
@@ -321,7 +327,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                 </button>
                 <button
                   type="submit"
-                  className={`w-full bg-blue-500 text-white py-2 rounded-lg ${
+                  className={`w-full bg-[var(--color-primary)] text-white py-2 rounded-lg ${
                     isDisabled ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                   disabled={isDisabled}

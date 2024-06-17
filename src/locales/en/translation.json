@@ -17,13 +17,13 @@
     "checkout": "Checkout",
     "price": "Price"
   },
-  "add-to-basket": "Add to Basket",
+  "add-to-basket": "Add to Cart",
   "price": "Price",
   "toast": {
     "quantityIncreased": "{{title}} quantity increased!",
-    "addedToBasket": "{{title}} added to basket!",
+    "addedToBasket": "{{title}} added to cart!",
     "quantityDecreased": "{{title}} quantity decreased!",
-    "removedFromBasket": "{{title}} removed from basket!"
+    "removedFromBasket": "{{title}} removed from cart!"
   },
   "error": {
     "fetchingBooks": "Error fetching books"
